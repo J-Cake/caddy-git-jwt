@@ -9,4 +9,5 @@ var (
 	ErrInvalidIssuer        = errors.New("invalid issuer")
 	ErrInvalidAudience      = errors.New("invalid audience")
 	ErrEmptyUserClaim       = errors.New("user claim is empty")
+	ErrInvalidBasicAuth     = errors.New("invalid basic authentication pattern")
 )

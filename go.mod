@@ -1,4 +1,4 @@
-module github.com/ggicci/caddy-jwt
+module github.com/J-Cake/caddy-git-jwt
 
 go 1.25
 

@@ -399,7 +399,12 @@ func (ja *JWTAuth) Authenticate(rw http.ResponseWriter, r *http.Request) (User, 
 	checked := make(map[string]struct{})
 
 	for _, candidateToken := range candidates {
-		tokenString := normToken(candidateToken)
+		tokenString, err := normToken(candidateToken)
+
+		if err != nil {
+			continue
+		}
+
 		if _, ok := checked[tokenString]; ok {
 			continue
 		}
@@ -476,11 +481,31 @@ func (ja *JWTAuth) Authenticate(rw http.ResponseWriter, r *http.Request) (User, 
 	return User{}, false, err
 }
 
-func normToken(token string) string {
-	if strings.HasPrefix(strings.ToLower(token), "bearer ") {
-		token = token[len("bearer "):]
+// func normToken(token string) string {
+// 	if strings.HasPrefix(strings.ToLower(token), "bearer ") {
+// 		token = token[len("bearer "):]
+// 	}
+// 	return strings.TrimSpace(token)
+// }
+
+func normToken(token string) (string, error) {
+	if strings.HasPrefix(strings.ToLower(token), "basic ") {
+		token = token[len("basic "):]
 	}
-	return strings.TrimSpace(token)
+
+	data, err := base64.StdEncoding.DecodeString(token)
+
+	if err != nil {
+		return "", ErrInvalidBasicAuth
+	}
+
+	token = string(data)
+
+	if strings.HasPrefix(strings.ToLower(token), "oauth2:") {
+		token = token[len("oauth2:"):]
+	}
+
+	return token, nil
 }
 
 func getTokensFromHeader(r *http.Request, names []string) []string {

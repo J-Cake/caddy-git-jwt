@@ -1,5 +1,11 @@
 # caddy-jwt
 
+> A lightly modified fork of the superb [Caddy-JWT](https://github.com/ggicci/caddy-jwt) plugin to handle Git's weird Basic authentication behaviour. 
+> 
+> Git sends OAuth autentication via `Authorization: Basic ${base64("oauth2:" + token)}`, which is mad, but you gotta live with it.
+>
+> TODO: Make it more configurable
+
 ![Go Workflow](https://github.com/ggicci/caddy-jwt/actions/workflows/go.yml/badge.svg) [![codecov](https://codecov.io/gh/ggicci/caddy-jwt/branch/main/graph/badge.svg?token=4V9OX8WFAW)](https://codecov.io/gh/ggicci/caddy-jwt) [![Go Report Card](https://goreportcard.com/badge/github.com/ggicci/caddy-jwt)](https://goreportcard.com/report/github.com/ggicci/caddy-jwt) [![Go Reference](https://pkg.go.dev/badge/github.com/ggicci/caddy-jwt.svg)](https://pkg.go.dev/github.com/ggicci/caddy-jwt)
 
 A Caddy HTTP Module - who Facilitates **JWT Authentication**
